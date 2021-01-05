@@ -1,0 +1,281 @@
+<apex:page showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">    
+
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">    
+
+<head>
+  <title>Inteygrate.com - Salesforce NodeJS integration using Streaming API</title>
+  <apex:stylesheet value="{!URLFOR($Resource.SLDS090, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+</head>    
+
+<apex:remoteObjects >
+  <apex:remoteObjectModel name="Account" fields="Id,Name,LastModifiedDate,Nodejs_Demo_Result__c"/>
+</apex:remoteObjects>
+
+<body>    
+
+  <!-- REQUIRED SLDS WRAPPER -->
+  <div class="slds">    
+
+    <!-- MASTHEAD -->
+    <p class="slds-text-heading--label slds-m-bottom--small">Salesforce NodeJS integration using Streaming API</p>
+    <!-- / MASTHEAD -->    
+
+    <!-- PAGE HEADER -->
+    <div class="slds-page-header" role="banner">
+
+  <!-- LAYOUT GRID -->
+  <div class="slds-grid">
+
+    <!-- GRID COL -->
+    <div class="slds-col">
+
+      <!-- HEADING AREA -->
+           <div class="slds-media">
+
+  <div class="slds-media__figure">
+    <span class="slds-avatar slds-avatar--large">
+      <img src="{!URLFOR($Resource.SLDS090, 'assets/images/avatar1.jpg')}" alt="portrait" />
+    </span>
+  </div>
+
+  <div class="slds-media__body">
+    <p class="slds-text-heading--label">Welcome</p>
+    <h1 class="slds-text-heading--medium">Guest login for inteygrate.com's Salesforce org</h1>
+  </div>
+
+</div>
+      <!-- /HEADING AREA -->
+
+    </div>
+
+    <!-- GRID COL -->
+    <div class="slds-col slds-no-flex slds-align-middle">
+<!--
+      <div class="slds-button-group" role="group">
+        <button class="slds-button slds-button--neutral">
+          New Account
+        </button>
+        <button class="slds-button slds-button--neutral">
+          More
+        </button>
+      </div>
+-->
+    </div>
+    <!-- / GRID COL -->
+
+  </div>
+  <!-- / LAYOUT GRID -->
+
+  <!--<p class="slds-text-body--small slds-m-top--x-small">COUNT items</p>-->
+
+</div>
+    <!-- / PAGE HEADER -->    
+
+    <!-- PRIMARY CONTENT WRAPPER -->
+    <div class="myapp">
+    
+      <!-- CREATE NEW ACCOUNT -->
+  <div aria-labelledby="newaccountform">
+
+    <!-- BOXED AREA -->
+    <fieldset class="slds-box slds-theme--default slds-container--small">
+
+      <legend id="newaccountform" class="slds-text-heading--medium slds-p-vertical--medium">Add a new account</legend>
+
+      <!-- CREATE NEW ACCOUNT FORM -->
+      <form class="slds-form--stacked">
+
+        <div class="slds-form-element">
+          <label class="slds-form-element__label" for="accountName">Name</label>
+          <div class="slds-form-element__control">
+            <input id="accountName" class="slds-input" type="text" placeholder="New account"/>
+          </div>
+        </div>
+        <button class="slds-button slds-button--brand slds-m-top--medium" type="button" onClick="createAccount()">Create Account</button>
+      </form>
+      <!-- CREATE NEW ACCOUNT FORM -->
+
+    </fieldset>
+    
+    <form class="slds-form--stacked" name="fb_form" style="position: absolute;
+    top: 180px;
+    right: 10px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #F4F6F9;">
+
+        <fieldset class="slds-form-element">
+          <legend class="slds-form-element__legend slds-form-element__label">Did the demo work for you?</legend>
+            
+          <div class="slds-form-element__control">
+          <input id="emailaddress" class="slds-input" type="text" placeholder="Your Email Address"/>
+          </div>
+          <div class="slds-form-element__control">
+            <label class="slds-radio">
+              <input type="radio" name="feedback" id="radio-yes" checked="true"/>
+              <span class="slds-radio--faux"></span>
+              <span class="slds-form-element__label">Yes</span>
+            </label>
+            <label class="slds-radio">
+              <input type="radio" name="feedback" id="radio-no"/>
+              <span class="slds-radio--faux"></span>
+              <span class="slds-form-element__label">No</span>
+            </label>
+          </div>
+        </fieldset>
+        <button class="slds-button slds-button--brand slds-m-top--medium" type="button" onClick="sendFeedback()">Submit</button>
+      </form>  
+    <!-- / BOXED AREA -->
+    
+  </div>
+  <!-- / CREATE NEW ACCOUNT -->
+  
+  <div class="myapp">    
+
+  <!-- ACCOUNT LIST TABLE -->
+  <div id="accountList" class="slds-p-vertical--medium"></div>
+  <!-- / ACCOUNT LIST TABLE -->    
+
+</div>
+    </div>
+    <!-- / PRIMARY CONTENT WRAPPER -->  
+    
+    
+
+    <!-- FOOTER -->
+<footer role="contentinfo" class="slds-p-around--large">
+  <!-- LAYOUT GRID -->
+  <div class="slds-grid slds-grid--align-spread">
+    <p class="slds-col">Demo module by Muralidhar</p>
+    <p class="slds-col">&copy; inteygrate.com</p>
+  </div>
+  <!-- / LAYOUT GRID -->
+</footer>
+<!-- / FOOTER -->
+  
+
+  </div>
+  <!-- / REQUIRED SLDS WRAPPER -->       
+
+</body>
+
+<!-- JAVASCRIPT -->
+<script>
+  var account = new SObjectModel.Account();
+  var outputDiv = document.getElementById("accountList");
+
+  function updateOutputDiv() {
+
+    account.retrieve(
+      {where:{Nodejs_Demo_Result__c:{eq:''}},orderby: [{LastModifiedDate: 'DESC'}], limit: 10},
+      function(error, records) {
+        if (error) {
+          alert(error.message);
+        } else {
+
+          // create data table
+          var dataTable = document.createElement('table');
+          dataTable.className = 'slds-table slds-table--bordered';
+
+          // add header row
+          var tableHeader = dataTable.createTHead();
+          var tableHeaderRow = tableHeader.insertRow();
+
+          var tableHeaderRowCell1 = tableHeaderRow.insertCell(0);
+          tableHeaderRowCell1.appendChild(document.createTextNode('Account name'));
+          tableHeaderRowCell1.setAttribute('scope', 'col');
+
+          var tableHeaderRowCell2 = tableHeaderRow.insertCell(1);
+          tableHeaderRowCell2.appendChild(document.createTextNode('Account ID'));
+          tableHeaderRowCell2.setAttribute('scope', 'col');
+
+          // build table body
+          var tableBody = dataTable.appendChild(document.createElement('tbody'))
+          var dataRow, dataRowCell1, dataRowCell2, recordName, recordId;
+          records.forEach(function(record) {
+
+              dataRow = tableBody.insertRow();
+
+              dataRowCell1 = dataRow.insertCell(0);
+              recordName = document.createTextNode(record.get("Name"));
+              dataRowCell1.appendChild(recordName);
+
+              dataRowCell2 = dataRow.insertCell(1);
+              recordId = document.createTextNode(record.get("Id"));
+              dataRowCell2.appendChild(recordId);
+
+          });
+
+          // create data table wrapper
+          var tableWrapper = document.createElement('div');
+          tableWrapper.className = 'slds-scrollable--x';
+          tableWrapper.appendChild(dataTable);
+
+          if (outputDiv.firstChild) {
+            // replace table if it already exists
+            // see later in tutorial
+            outputDiv.replaceChild(tableWrapper, outputDiv.firstChild);
+          } else {
+            outputDiv.appendChild(tableWrapper);
+          }
+        }
+      }
+    );
+  }
+
+  updateOutputDiv();
+  function createAccount() {
+  var accountName = document.getElementById("accountName").value;
+  var account = new SObjectModel.Account();
+  account.create({Name: accountName}, function(error, records) {
+    if (error) {
+      alert(error.message);
+    } else {
+      updateOutputDiv();
+      document.getElementById("accountName").value=""
+      alert("Account successfully created.");
+    }
+  });
+  return false;
+  }
+  
+  function sendFeedback(){
+  
+      var result;
+      var emailaddress;
+      if(document.getElementById('radio-no').checked){
+          result = "Did not work";
+          //alert("Thank you !! Your feedback was saved. I will see what went wrong");
+      }
+      else if(document.getElementById('radio-yes').checked){
+          //alert("Thank you !! Your feedback was saved. Feel free to check with more accounts");
+          result = "Worked";
+      }
+      
+      emailaddress = document.getElementById('emailaddress').value;
+      if(emailaddress==''){
+          alert('Please share your email address so that we can share updates and solution in case the demo did not work');
+          return;
+      }
+      else{
+          alert("Thank you !! Your feedback was saved. Feel free to check with more accounts");
+      }
+      
+      var account = new SObjectModel.Account();
+      account.create({Name: result,Nodejs_Demo_Result__c:result,Email__c:emailaddress}, function(error, records) {
+        if (error) {
+          alert(error.message);
+        }
+      });
+          
+      
+      return false;
+      
+  }
+
+</script>
+<!-- / JAVASCRIPT -->
+
+</html>
+</apex:page>

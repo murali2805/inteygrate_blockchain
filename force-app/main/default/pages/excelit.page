@@ -1,0 +1,380 @@
+<apex:page contentType="txt/xml#sheet1.xml" controller="Excelit">
+  <apex:outputText value="{!xlsHeader}"/>
+    <worksheet
+        xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"
+        xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="x14ac xr xr2 xr3"
+        xmlns:x14ac="http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac"
+        xmlns:xr="http://schemas.microsoft.com/office/spreadsheetml/2014/revision"
+        xmlns:xr2="http://schemas.microsoft.com/office/spreadsheetml/2015/revision2"
+        xmlns:xr3="http://schemas.microsoft.com/office/spreadsheetml/2016/revision3" xr:uid="{C9D1D0B7-A4E5-4C1D-9B91-EC52BEA3F88F}">
+        <dimension ref="A1:P15"/>
+        <sheetViews>
+            <sheetView showGridLines="0" tabSelected="1" zoomScaleNormal="100" workbookViewId="0">
+                <selection activeCell="A15" sqref="A15"/>
+            </sheetView>
+        </sheetViews>
+        <sheetFormatPr defaultColWidth="0" defaultRowHeight="14.5" x14ac:dyDescent="0.35"/>
+        <cols>
+            <col min="1" max="1" width="18.7265625" customWidth="1"/>
+            <col min="2" max="2" width="18.36328125" customWidth="1"/>
+            <col min="3" max="3" width="15.6328125" customWidth="1"/>
+            <col min="4" max="4" width="18" customWidth="1"/>
+            <col min="5" max="5" width="16.08984375" customWidth="1"/>
+            <col min="6" max="6" width="9.7265625" style="4" customWidth="1"/>
+            <col min="7" max="7" width="11.7265625" style="11" customWidth="1"/>
+            <col min="8" max="8" width="8.7265625" style="7" customWidth="1"/>
+            <col min="9" max="9" width="11.08984375" style="7" customWidth="1"/>
+            <col min="10" max="10" width="2.6328125" customWidth="1"/>
+            <col min="11" max="11" width="19.36328125" hidden="1" customWidth="1"/>
+            <col min="12" max="12" width="21.26953125" hidden="1" customWidth="1"/>
+            <col min="13" max="16384" width="8.7265625" hidden="1"/>
+        </cols>
+        <sheetData>
+            <row r="1" spans="1:16" ht="23.5" customHeight="1" x14ac:dyDescent="0.35">
+                <c r="A1" s="13" t="s">
+                    <v>0</v>
+                </c>
+                <c r="B1" s="13"/>
+                <c r="C1" s="13"/>
+                <c r="D1" s="13"/>
+                <c r="E1" s="13"/>
+                <c r="F1" s="13"/>
+                <c r="G1" s="13"/>
+                <c r="H1" s="13"/>
+                <c r="I1" s="13"/>
+                <c r="K1" t="s">
+                    <v>24</v>
+                </c>
+                <c r="L1" t="s">
+                    <v>10</v>
+                </c>
+                <c r="M1" t="s">
+                    <v>2</v>
+                </c>
+                <c r="N1" t="s">
+                    <v>11</v>
+                </c>
+                <c r="O1" t="s">
+                    <v>6</v>
+                </c>
+                <c r="P1" t="s">
+                    <v>12</v>
+                </c>
+            </row>
+            <row r="2" spans="1:16" ht="15" thickBot="1" x14ac:dyDescent="0.4">
+                <c r="A2" s="14"/>
+                <c r="B2" s="14"/>
+                <c r="C2" s="14"/>
+                <c r="D2" s="14"/>
+                <c r="E2" s="14"/>
+                <c r="F2" s="14"/>
+                <c r="G2" s="14"/>
+                <c r="H2" s="14"/>
+                <c r="I2" s="14"/>
+                <c r="M2" t="s">
+                    <v>18</v>
+                </c>
+                <c r="N2" t="s">
+                    <v>28</v>
+                </c>
+                <c r="O2" t="s">
+                    <v>25</v>
+                </c>
+                <c r="P2" t="s">
+                    <v>22</v>
+                </c>
+            </row>
+            <row r="3" spans="1:16" x14ac:dyDescent="0.35">
+                <c r="A3" s="26" t="s">
+                    <v>27</v>
+                </c>
+                <c r="B3" s="27"/>
+                <c r="C3" s="27"/>
+                <c r="D3" s="27"/>
+                <c r="E3" s="27"/>
+                <c r="F3" s="27"/>
+                <c r="G3" s="27"/>
+                <c r="H3" s="27"/>
+                <c r="I3" s="28"/>
+                <c r="M3" t="s">
+                    <v>13</v>
+                </c>
+                <c r="N3" t="s">
+                    <v>19</v>
+                </c>
+                <c r="O3" t="s">
+                    <v>26</v>
+                </c>
+                <c r="P3" t="s">
+                    <v>23</v>
+                </c>
+            </row>
+            <row r="4" spans="1:16" ht="43" customHeight="1" x14ac:dyDescent="0.35">
+                <c r="A4" s="15" t="s">
+                    <v>35</v>
+                </c>
+                <c r="B4" s="16"/>
+                <c r="C4" s="16"/>
+                <c r="D4" s="16"/>
+                <c r="E4" s="16"/>
+                <c r="F4" s="16"/>
+                <c r="G4" s="16"/>
+                <c r="H4" s="16"/>
+                <c r="I4" s="17"/>
+                <c r="M4" t="s">
+                    <v>14</v>
+                </c>
+                <c r="N4" t="s">
+                    <v>20</v>
+                </c>
+            </row>
+            <row r="5" spans="1:16" ht="29" customHeight="1" x14ac:dyDescent="0.35">
+                <c r="A5" s="15" t="s">
+                    <v>36</v>
+                </c>
+                <c r="B5" s="16"/>
+                <c r="C5" s="16"/>
+                <c r="D5" s="16"/>
+                <c r="E5" s="16"/>
+                <c r="F5" s="16"/>
+                <c r="G5" s="16"/>
+                <c r="H5" s="16"/>
+                <c r="I5" s="17"/>
+                <c r="M5" t="s">
+                    <v>15</v>
+                </c>
+                <c r="N5" t="s">
+                    <v>21</v>
+                </c>
+            </row>
+            <row r="6" spans="1:16" ht="14.5" customHeight="1" x14ac:dyDescent="0.35">
+                <c r="A6" s="15" t="s">
+                    <v>37</v>
+                </c>
+                <c r="B6" s="16"/>
+                <c r="C6" s="16"/>
+                <c r="D6" s="16"/>
+                <c r="E6" s="16"/>
+                <c r="F6" s="16"/>
+                <c r="G6" s="16"/>
+                <c r="H6" s="16"/>
+                <c r="I6" s="17"/>
+                <c r="M6" t="s">
+                    <v>16</v>
+                </c>
+            </row>
+            
+            <row r="7" spans="1:16" x14ac:dyDescent="0.35">
+                <c r="A7" s="18" t="s">
+                    <v>38</v>
+                </c>
+                <c r="B7" s="19"/>
+                <c r="C7" s="19"/>
+                <c r="D7" s="19"/>
+                <c r="E7" s="19"/>
+                <c r="F7" s="19"/>
+                <c r="G7" s="19"/>
+                <c r="H7" s="19"/>
+                <c r="I7" s="20"/>
+                <c r="M7" t="s">
+                    <v>17</v>
+                </c>
+            </row>
+            <row r="8" spans="1:16" x14ac:dyDescent="0.35">
+                <c r="A8" s="1"/>
+                <c r="B8" s="19" t="s">
+                    <v>29</v>
+                </c>
+                <c r="C8" s="19"/>
+                <c r="D8" s="19"/>
+                <c r="E8" s="19"/>
+                <c r="F8" s="19"/>
+                <c r="G8" s="10"/>
+                <c r="H8" s="9"/>
+                <c r="I8" s="6"/>
+            </row>
+            <row r="9" spans="1:16" x14ac:dyDescent="0.35">
+                <c r="A9" s="1"/>
+                <c r="B9" s="19" t="s">
+                    <v>34</v>
+                </c>
+                <c r="C9" s="19"/>
+                <c r="D9" s="19"/>
+                <c r="E9" s="19"/>
+                <c r="F9" s="19"/>
+                <c r="G9" s="10"/>
+                <c r="H9" s="9"/>
+                <c r="I9" s="6"/>
+            </row>
+            <row r="10" spans="1:16" x14ac:dyDescent="0.35">
+                <c r="A10" s="1"/>
+                <c r="B10" s="19" t="s">
+                    <v>39</v>
+                </c>
+                <c r="C10" s="19"/>
+                <c r="D10" s="19"/>
+                <c r="E10" s="19"/>
+                <c r="F10" s="19"/>
+                <c r="G10" s="10"/>
+                <c r="H10" s="9"/>
+                <c r="I10" s="6"/>
+            </row>
+            <row r="11" spans="1:16" ht="29" customHeight="1" thickBot="1" x14ac:dyDescent="0.4">
+                <c r="A11" s="23" t="s">
+                    <v>30</v>
+                </c>
+                <c r="B11" s="24"/>
+                <c r="C11" s="24"/>
+                <c r="D11" s="24"/>
+                <c r="E11" s="24"/>
+                <c r="F11" s="24"/>
+                <c r="G11" s="24"/>
+                <c r="H11" s="24"/>
+                <c r="I11" s="25"/>
+            </row>
+            <row r="13" spans="1:16" x14ac:dyDescent="0.35">
+                <c r="A13" s="21" t="s">
+                    <v>33</v>
+                </c>
+                <c r="B13" s="21"/>
+                <c r="C13" s="22" t="s">
+                    <v>32</v>
+                </c>
+                <c r="D13" s="22"/>
+                <c r="E13" s="22"/>
+                <c r="F13" s="22"/>
+                <c r="G13" s="22"/>
+                <c r="H13" s="22"/>
+                <c r="I13" s="22"/>
+            </row>
+            <row r="14" spans="1:16" ht="39" x14ac:dyDescent="0.35">
+                <c r="A14" s="3" t="s">
+                    <v>1</v>
+                </c>
+                <c r="B14" s="3" t="s">
+                    <v>2</v>
+                </c>
+                <c r="C14" s="3" t="s">
+                    <v>3</v>
+                </c>
+                <c r="D14" s="3" t="s">
+                    <v>4</v>
+                </c>
+                <c r="E14" s="3" t="s">
+                    <v>5</v>
+                </c>
+                <c r="F14" s="3" t="s">
+                    <v>6</v>
+                </c>
+                <c r="G14" s="3" t="s">
+                    <v>7</v>
+                </c>
+                <c r="H14" s="3" t="s">
+                    <v>9</v>
+                </c>
+                <c r="I14" s="3" t="s">
+                    <v>8</v>
+                </c>
+                <c r="K14" t="s">
+                    <v>31</v>
+                </c>
+            </row>
+            <row r="15" spans="1:16" x14ac:dyDescent="0.35">
+                <c r="A15" s="2"/>
+                <c r="B15" s="2"/>
+                <c r="C15" s="2"/>
+                <c r="D15" s="2"/>
+                <c r="E15" s="2"/>
+                <c r="F15" s="5"/>
+                <c r="G15" s="12"/>
+                <c r="H15" s="8"/>
+                <c r="I15" s="8"/>
+            </row>
+        </sheetData>
+        <sheetProtection algorithmName="SHA-512" hashValue="p3zT8t70q4xLlA5uMxzm7+xDe0nYLgHYuKMoXZxca1IRWCT38Cl7YkZN2++DpSm33hU/Kwxb75Hx0F+kyNvIfw==" saltValue="eobaFJsvXUJQv2DG3DoWBQ==" spinCount="100000" sheet="1" formatRows="0" insertRows="0" sort="0"/>
+        <mergeCells count="12">
+            <mergeCell ref="A13:B13"/>
+            <mergeCell ref="C13:I13"/>
+            <mergeCell ref="B10:F10"/>
+            <mergeCell ref="A11:I11"/>
+            <mergeCell ref="A3:I3"/>
+            <mergeCell ref="B8:F8"/>
+            <mergeCell ref="B9:F9"/>
+            <mergeCell ref="A1:I2"/>
+            <mergeCell ref="A4:I4"/>
+            <mergeCell ref="A5:I5"/>
+            <mergeCell ref="A6:I6"/>
+            <mergeCell ref="A7:I7"/>
+        </mergeCells>
+        
+        <conditionalFormatting sqref="A15">
+    		<cfRule type="containsBlanks" dxfId="7" priority="14">
+    			<formula>{!f1}</formula>
+    		</cfRule>
+    	</conditionalFormatting>
+    	
+    	<conditionalFormatting sqref="C15:C15">
+    		<cfRule type="expression" dxfId="6" priority="11">
+    			<formula>{!f2}</formula>
+    		</cfRule>
+    	</conditionalFormatting>
+    	<conditionalFormatting sqref="D15:D15">
+    		<cfRule type="expression" dxfId="5" priority="9">
+    			<formula>{!f3}</formula>
+    		</cfRule>
+    	</conditionalFormatting>
+    	<conditionalFormatting sqref="E15:E15">
+    		<cfRule type="expression" dxfId="4" priority="8">
+    			<formula>{!f4}</formula>
+    		</cfRule>
+    	</conditionalFormatting>
+    	<conditionalFormatting sqref="F15:F15">
+    		<cfRule type="expression" dxfId="3" priority="7">
+    			<formula>{!f5}</formula>
+    		</cfRule>
+    	</conditionalFormatting>
+    	<conditionalFormatting sqref="G15:G15">
+    		<cfRule type="expression" dxfId="2" priority="6">
+    			<formula>{!f6}</formula>
+    		</cfRule>
+    	</conditionalFormatting>
+    	<conditionalFormatting sqref="H15:H15">
+    		<cfRule type="expression" dxfId="1" priority="2">
+    			<formula>{!f7}</formula>
+    		</cfRule>
+    	</conditionalFormatting>
+    	<conditionalFormatting sqref="I15:I15">
+    		<cfRule type="expression" dxfId="0" priority="1">
+    			<formula>{!f8}</formula>
+    		</cfRule>
+    	</conditionalFormatting>
+        
+        <dataValidations xWindow="87" yWindow="681" count="8">
+            <dataValidation type="list" allowBlank="1" showInputMessage="1" showErrorMessage="1" error="You must select one of the provided relationship types. " promptTitle="Relationship to Employee" prompt="Select the appropriate relationship for this dependent. If the employee does not have a dependent, select &quot;None&quot;." sqref="C15:C15" xr:uid="{86AF3274-CB3C-4E3C-8D2A-F13F6B18901B}">
+                <formula1>$N$2:$N$5</formula1>
+            </dataValidation>
+            <dataValidation type="list" allowBlank="1" showInputMessage="1" showErrorMessage="1" error="Only a valid Employee Health Election may be selected. " promptTitle="Employee Health Election" prompt="Employee Health Election will be defaulted to selection made on Employee or COBRA census.  Changes to Employee Health Election will not be reflected on Employee or COBRA census. " sqref="B15:B15" xr:uid="{81739DE9-4F3D-4EBC-9D21-615824D987C6}">
+                <formula1>$M$2:$M$7</formula1>
+            </dataValidation>
+            <dataValidation allowBlank="1" showInputMessage="1" showErrorMessage="1" promptTitle="Employee Name" prompt="-Enter modified 2 name in &quot;First Name Last Name&quot; format such as &quot;Jane Doe&quot;. _x000a_-Employee names will be defaulted with this format from Employee and COBRA census. Changes to Employee name will not be reflected in Employee or COBRA census. " sqref="A15:A15" xr:uid="{04BB3637-A7C5-49C4-8253-27594DAFD15A}"/>
+            <dataValidation type="list" allowBlank="1" showInputMessage="1" showErrorMessage="1" error="You must select Male or Female" promptTitle="Gender" prompt="Select one:_x000a_M for Male_x000a_F for Female" sqref="F15:F15" xr:uid="{0C25C034-9E70-4C56-BCDA-FF192745B3AF}">
+                <formula1>$O$2:$O$3</formula1>
+            </dataValidation>
+            <dataValidation type="date" operator="greaterThan" allowBlank="1" showInputMessage="1" showErrorMessage="1" error="Date of Birth must be after 1/1/1900" promptTitle="Date of Birth" prompt="Enter date of birth in DD/MM/YYYY format. " sqref="G15:G15" xr:uid="{0F85C204-F0D1-4261-8FB8-A5F2294B0B01}">
+                <formula1>1</formula1>
+            </dataValidation>
+            <dataValidation type="textLength" operator="lessThan" allowBlank="1" showInputMessage="1" showErrorMessage="1" error="ZIP code must not exceed five characters. " promptTitle="Home ZIP Code" prompt="Enter five digit Home ZIP code for the dependent. " sqref="H15:H15" xr:uid="{78995D10-F592-4909-9291-807925932E05}">
+                <formula1>6</formula1>
+            </dataValidation>
+            <dataValidation type="list" allowBlank="1" showInputMessage="1" showErrorMessage="1" error="Must select Y or N" promptTitle="Electing Health Coverage" prompt="Select whether dependent is expected to receive health coverage from TriNet.  _x000a_Y = Yes _x000a_N = No" sqref="I16:I15" xr:uid="{73B4F7A6-AEF6-4A37-85CE-24D90F48CDC9}">
+                <formula1>$P$2:$P$3</formula1>
+            </dataValidation>
+            <dataValidation type="list" allowBlank="1" showInputMessage="1" showErrorMessage="1" error="Must select Y or N" promptTitle="Electing Health Coverage" prompt="Select whether dependent is expected to receive health coverage from TriNet.  _x000a_Y for Yes _x000a_N for No" sqref="I15" xr:uid="{CE3A0840-5196-4C03-A67A-9A7843A1DE46}">
+                <formula1>$P$2:$P$3</formula1>
+            </dataValidation>
+        </dataValidations>
+        <pageMargins left="0.7" right="0.7" top="0.75" bottom="0.75" header="0.3" footer="0.3"/>
+        <pageSetup orientation="portrait" r:id="rId1"/>
+    </worksheet>
+</apex:page>

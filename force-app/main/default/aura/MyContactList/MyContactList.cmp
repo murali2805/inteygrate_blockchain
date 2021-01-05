@@ -1,0 +1,45 @@
+<aura:component controller="MyContactListController">
+	<ltng:require styles="/resource/bootstrap/bootstrap-3.3.6-dist/css/bootstrap.min.css,/resource/bootstrapmultiselect/bootstrap-multiselect-master/dist/css/bootstrap-multiselect.css,/resource/SLDS100/assets/styles/salesforce-lightning-design-system-ltng.css"
+                  scripts="/resource/jquery,/resource/bootstrap/bootstrap-3.3.6-dist/js/bootstrap.min.js,/resource/bootstrapmultiselect/bootstrap-multiselect-master/dist/js/bootstrap-multiselect.js"
+                  afterScriptsLoaded="{!c.scriptsLoaded}"/>
+    <aura:handler name="init" action="{!c.myAction}" value="{!this}" />
+	<aura:attribute name="contacts" type="Contact[]" />
+    <aura:attribute name="compname" type="String" />
+	<!--
+    <select id="multiSelect"  multiple="true" >
+                            <aura:iteration items="{!v.contacts}" var="contact">
+                                <option text="{!contact.Name}" label="{!contact.Name}"/> 
+                            </aura:iteration>
+                        </select>-->
+    <div class="slds">
+    	<div class="slds-form-element">
+        	<label class="slds-form-element__label" for="multiSelectSpan">{!v.compname}</label>
+        	<div class="slds-form-element__control">
+                <div class="slds-select_container">
+                    <span id="{!'multiSelectSpan' + v.compname}">
+                        <!--
+                        <ui:inputSelect aura:id="multiSelect2"  multiple="true">
+                            <aura:iteration items="{!v.contacts}" var="contact">
+                                <ui:inputSelectOption text="{!contact.Name}" label="{!contact.Name}"/> 
+                            </aura:iteration>
+                        </ui:inputSelect>-->
+                        
+                        <select multiple="true" >
+                            <aura:iteration items="{!v.contacts}" var="contact">
+                                <option text="{!contact.Name}" label="{!contact.Name}"/> 
+                            </aura:iteration>
+                        </select>
+                    </span>
+                </div>
+            </div>
+         </div>
+         <div class="slds-form-element">
+            <div class="slds-form-element__control" id="{!v.compname}">
+                <!--input boxes for Phone will be dynamically added here -->
+            </div>
+        </div>
+        <hr></hr>
+    </div>
+  
+
+</aura:component>

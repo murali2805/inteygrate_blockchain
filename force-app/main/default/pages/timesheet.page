@@ -1,0 +1,221 @@
+<apex:page controller="TimesheetSubmission" docType="html-5.0" title="Timesheet and Work Log" showHeader="false" tabStyle="Case" cache="false" expires="-1">
+    <apex:includeScript value="{!URLFOR($Resource.jquery)}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jqueryDataTables, 'jquery.dataTables.min.js')}"/>
+
+    <apex:stylesheet value="{!URLFOR($Resource.jqueryDataTables, 'jquery.dataTables.min.css')}"/>
+    
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/select/1.2.1/js/dataTables.select.min.js"></script>
+    
+    <style>
+        /* The Modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+        
+        /* Modal Content/Box */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+        }
+        
+        .newSave{
+            display:none;
+            padding: 2px 5px!important;
+        }
+        
+    </style>
+    <a href="https://inteygrate-dev-ed--c.ap6.content.force.com/servlet/servlet.FileDownload?file=00P0K00001JXcVi">Download</a>
+    <apex:form >
+        <apex:actionFunction name="getThisRecordDetailsAF" action="{!getThisRecordDetails}" reRender="editFormPB">
+            <apex:param name="thisId" value="" assignTo="{!thisId}"/>
+            <apex:param name="mode" value="" assignTo="{!mode}"/>
+        </apex:actionFunction>
+    </apex:form>
+    
+    <div style="padding:20px">
+        <apex:form id="form">
+            <apex:pageBlock id="dataTablePB" title="Work Logs ">
+                <apex:pageBlockButtons >
+                    <button type="button" onClick="openNewForm()">New Work Log</button>
+                </apex:pageBlockButtons>
+                
+                <apex:outputPanel id="refreshPanel">
+                    <table id="myDataTable" class="display" cellspacing="0" width="100%">
+                        <thead style="background-color: #f2f3f3;">
+                            <tr>
+                                <!--<th><input class="checkbox" type="checkbox" id="ca"/></th>-->
+                                <th>Jira</th>
+                                <th>Date</th>
+                                <th>Hours</th>
+                                <th>Resource</th>
+                                <th>Comments</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead> 
+                        <tbody>
+                            <apex:repeat value="{!workLogs }" var="wl" id="theRepeat">
+                                <tr>
+                                   
+                                    <!--<td><input class="checkbox" type="checkbox" id="{!wl.Id}"/></td>-->
+                                    <td>{!wl.Jira__c}</td>
+                                    <td>
+                                        <apex:outputText value="{0, date, dd'-'MMM'-'yyyy}">
+                                            <apex:param value="{!wl.Date__c}" /> 
+                                        </apex:outputText>
+                                    </td>
+                                    <td>{!wl.Hours__c}</td>
+                                    <td>{!wl.Resource__c}</td>
+                                    <td>{!wl.Comments__c}</td>
+                                    <td><a href="javascript:void" onClick="openEditForm('{!wl.id}',this)">Edit</a></td>
+                                </tr>
+                            </apex:repeat>
+                        </tbody>
+                    </table>
+                </apex:outputPanel>
+            </apex:pageBlock>
+        </apex:form>
+        
+        <apex:form id="commonform">
+                        
+            <apex:actionFunction name="updateWorklogAF" action="{!updateWorklog}" reRender="dataTablePB" oncomplete="dataTableRedraw()">
+                <apex:param name="mode" value="" assignTo="{!mode}"/>
+            </apex:actionFunction>
+            
+            <div id="editModal" class="modal">
+                <div class="modal-content">
+                    <apex:actionStatus startText="Please Wait..." stopText="" id="counterStatus"/>
+                    <apex:pageBlock title="Edit Work Log" id="editFormPB">
+                        <apex:pageBlockSection >
+                                <apex:inputField value="{!editWorklog.Jira__c}" label="Jira"/>
+                                <apex:inputField value="{!editWorklog.Date__c}" label="Date"/>
+                                <apex:inputField id="editFormId" value="{!editWorklog.Hours__c}" label="Hours"/>
+                                <apex:inputField value="{!editWorklog.Resource__c}" label="Resource"/>
+                                <apex:inputtextarea cols="50" rows="5" value="{!editWorklog.Comments__c}" label="Comments"/>
+                        </apex:pageBlockSection>
+                        <apex:pageBlockButtons >
+                            <button type="button" class="editSave" onClick="updateWorklogJS()">Save</button>
+                            
+                            <button onClick="closeModal()" type="button" class="close">Cancel</button>
+                        </apex:pageBlockButtons>
+                    </apex:pageBlock>
+                </div>
+            </div>       
+        </apex:form>
+    </div>
+    
+    <script>
+        var table;
+        var mode;
+        
+        // Get the modal
+        var modal = document.getElementById('editModal');
+        
+        // When the user clicks on <span> (x), close the modal
+        function closeModal() {
+            modal.style.display = "none";
+        }
+        
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+        
+        function openEditForm(rowId){
+            mode = 'edit';
+            $('.editSave').show();
+            $('.newSave').hide();
+            getThisRecordDetailsAF(rowId,'edit');
+            $('#editModal').show();
+            
+            
+        }
+        
+        function updateWorklogJS(){
+            updateWorklogAF(mode);
+        }
+        
+        function openNewForm(){
+            mode = 'new';
+            $('.editSave').hide();
+            $('.newSave').show();
+            //$('[id$=commonform]').find("input[type=text], textarea,select").val("");
+            getThisRecordDetailsAF('','new');
+            $('#editModal').show();
+            
+        }
+        
+        $('.checkbox').change(function(){
+        
+            var indexes = [];
+            table.$("input:checked", {"page": "all"}).each(function(index,elem){
+                var tr = $(elem).closest("tr")
+                console.log(table.row(tr).index());
+                indexes.push(table.row(tr).index());
+            });
+            
+            if(this.checked)
+                table.rows(indexes).select();           
+            else{
+                var thistr = $(this).closest("tr");
+                table.row(thistr).deselect();           
+            }
+        })
+        
+        function dataTableRedraw(){
+            $('#editModal').hide();
+            applyDatatable();
+        }
+        
+        function applyDatatable(){
+            table = $('[id$=myDataTable]').DataTable({
+                 "order": [[ 1, "desc" ]],
+                
+                  "fnCreatedRow": function (nRow, aData, iDataIndex) {
+                        $(nRow).attr('id', 'my' + iDataIndex); // or whatever you choose to set as the id
+                    },
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'excel'
+                    ],
+                  "columnDefs": [
+                        { "width": "10%", "targets": 0 },
+                        { "width": "10%", "targets": 1 },
+                        { "width": "5%", "targets": 2 },
+                        { "width": "20%", "targets": 3 },
+                        { "width": "50%", "targets": 4 },
+                        { "width": "5%", "targets": 5 }
+                      ]
+            });
+        }
+
+        
+        $(document).ready(function() {
+            applyDatatable();
+        });
+    
+    </script>
+    
+
+    
+</apex:page>

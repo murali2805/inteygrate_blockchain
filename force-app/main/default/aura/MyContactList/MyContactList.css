@@ -1,0 +1,14 @@
+.THIS .slds-select_container {
+    margin:5px;
+    width: 0px;
+}
+
+.THIS input::-webkit-input-placeholder { font-size:12px }
+.THIS input::-moz-placeholder { font-size:12px } /* firefox 19+ */
+.THIS input:-ms-input-placeholder { font-size:12px } /* ie */
+.THIS input:-moz-placeholder { font-size:12px }
+
+.THIS label.slds-form-element__label {
+    margin: 10px;
+    font-size:12px;
+}

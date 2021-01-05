@@ -1,0 +1,306 @@
+<apex:page showHeader="false" controller="chatAppController"
+    standardStylesheets="false" sidebar="false" applyHtmlTag="false"
+    applyBodyTag="false" docType="html-5.0">
+    <apex:form >
+        <apex:actionFunction name="createPushTopic"
+            action="{!createPushTopic}" rerender="accountList" />
+    </apex:form>
+<html xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink">
+
+<head>
+<title>{!title}</title>
+<apex:stylesheet value="{!$Resource.bootstrap}" />
+<apex:includeScript value="{!$Resource.cometd}" />
+<apex:includeScript value="{!$Resource.jquery}" />
+<apex:includeScript value="{!$Resource.json2}" />
+<apex:includeScript value="{!$Resource.jquery_cometd}" />
+<script type="text/javascript">
+    (function($){
+        $(document).ready(function() {
+        
+            createPushTopic();
+            
+            // Connect to the CometD endpoint
+            $.cometd.init({
+               url: window.location.protocol+'//'+window.location.hostname+'/cometd/24.0/',
+               requestHeaders: { Authorization: 'OAuth {!$Api.Session_ID}'}
+           });
+
+           // Subscribe to a topic. JSON-encoded update will be returned
+           // in the callback
+           $.cometd.subscribe('/topic/{!topic}', function(message) {
+               $('#content').append('<p>Notification: ' +
+                    'Channel: ' + JSON.stringify(message.channel) + '<br>' +
+                    'Record name: ' + JSON.stringify(message.data.sobject.Name) +
+                    '<br>' + 'ID: ' + JSON.stringify(message.data.sobject.Id) + 
+                    '<br>' + 'Event type: ' + JSON.stringify(message.data.event.type)+
+                    '<br>' + 'Created: ' + JSON.stringify(message.data.event.createdDate) + 
+                    '</p>');
+            });
+        });
+   })(jQuery)
+   function disconnect() {
+       $.cometd.disconnect();
+   }
+   window.onbeforeunload = disconnect;
+   </script>
+</head>
+
+<apex:remoteObjects >
+    <apex:remoteObjectModel name="Chat__c"
+        fields="Id,Name,message__c,Topic_Name__c,LastModifiedDate" />
+</apex:remoteObjects>
+<apex:remoteObjects >
+    <apex:remoteObjectModel name="Account"
+        fields="Id,Name,LastModifiedDate" />
+</apex:remoteObjects>
+
+<body>
+
+    <!-- REQUIRED SLDS WRAPPER -->
+    <div class="slds">
+        <div id="content"></div>
+        
+        <!-- PAGE HEADER -->
+        <div class="slds-page-header" role="banner">
+
+            <!-- LAYOUT GRID -->
+            <div class="slds-grid">
+
+                <!-- GRID COL -->
+                <div class="slds-col">
+
+                    <!-- HEADING AREA
+                    <div class="slds-media">
+
+                        <div class="slds-media__figure">
+                            <span class="slds-avatar slds-avatar--large"> <img
+                                src="{!URLFOR($Resource.SLDS100, 'assets/images/avatar1.jpg')}"
+                                alt="portrait" />
+                            </span>
+                        </div>
+
+                        <div class="slds-media__body">
+                            <p class="slds-text-heading--label">{!topic}</p>
+                            <h1 class="slds-text-heading--small">Guest login for
+                                inteygrate.com's Salesforce org</h1>
+                        </div>
+
+                    </div>
+                    <!-- /HEADING AREA -->
+
+                </div>
+
+                <!-- GRID COL -->
+                <div class="slds-col slds-no-flex slds-align-middle">
+                    <!--
+      <div class="slds-button-group" role="group">
+        <button class="slds-button slds-button--neutral">
+          New Account
+        </button>
+        <button class="slds-button slds-button--neutral">
+          More
+        </button>
+      </div>
+-->
+                </div>
+                <!-- / GRID COL -->
+
+            </div>
+            <!-- / LAYOUT GRID -->
+
+            <!--<p class="slds-text-body--small slds-m-top--x-small">COUNT items</p>-->
+
+        </div>
+        <!-- / PAGE HEADER -->
+
+        <!-- PRIMARY CONTENT WRAPPER -->
+        <div class="myapp">
+
+            <!-- CREATE NEW ACCOUNT -->
+            <div aria-labelledby="newaccountform">
+
+                <!-- BOXED AREA -->
+                <fieldset class="slds-box slds-theme--default slds-container--small">
+
+                    <legend id="newaccountform"
+                        class="slds-text-heading--medium slds-p-vertical--medium">Enter
+                        your message here</legend>
+
+                    <!-- CREATE NEW ACCOUNT FORM -->
+                    <form class="slds-form--stacked">
+
+                        <div class="slds-form-element">
+                            <label class="slds-form-element__label" for="accountName">Name</label>
+                            <div class="slds-form-element__control">
+                                <input id="accountName" class="slds-input" type="text"
+                                    placeholder="New account" />
+                            </div>
+                        </div>
+                        <button class="slds-button slds-button--brand slds-m-top--medium"
+                            type="button" onClick="createAccount()">Create Account</button>
+                    </form>
+                    <!-- CREATE NEW ACCOUNT FORM -->
+
+                </fieldset>
+                <!-- / BOXED AREA -->
+
+            </div>
+            <!-- / CREATE NEW ACCOUNT -->
+
+            <!-- 
+            <div class="slds-media slds-comment slds-hint-parent">
+              <div class="slds-media__figure">
+                <div class="slds-avatar slds-avatar--circle slds-avatar--small">
+                  <a href="#void" title="Jenna Davis">
+                    <img src="{!URLFOR($Resource.SLDS100,'/assets/images/avatar2.jpg')}" alt="Jenna Davis"/>
+                  </a>
+                </div>
+              </div>
+              <div class="slds-media__body">
+                <div class="slds-grid slds-grid--align-spread slds-has-flexi-truncate">
+                  <p class="slds-truncate">
+                    <a href="#void" title="Jenna Davis">Jenna Davis</a> -
+                    <span class="slds-text-body--small">16hr Ago</span>
+                  </p>
+                  <button class="slds-button slds-button--icon-border-filled slds-button--icon-x-small slds-shrink-none">
+                    <svg aria-hidden="true" class="slds-button__icon slds-button__icon--hint slds-button__icon--small">
+                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{!URLFOR($Resource.SLDS100,'/assets/icons/utility-sprite/svg/symbols.svg#down')}"></use>
+                    </svg>
+                    <span class="slds-assistive-text">Show More</span>
+                  </button>
+                </div>
+                <div class="slds-comment__content slds-text-longform">
+                  <p>
+                    <a href="#void" title="Jason Rodgers">@Jason Rodgers</a> I left you some feedback!
+                  </p>
+                </div>
+                <ul class="slds-list--horizontal slds-has-dividers--right slds-text-body--small">
+                  <li class="slds-list__item">
+                    <a href="#void" title="Like this item"> Like</a>
+                  </li>
+                  <li class="slds-list__item">21 Likes</li>
+                </ul>
+              </div>
+            </div>
+            
+             -->
+                            
+            <!-- ACCOUNT LIST TABLE -->
+            <div id="accountList" class="slds-p-vertical--medium"></div>
+            <!-- / ACCOUNT LIST TABLE -->
+            
+                
+        
+        </div>
+        <!-- / PRIMARY CONTENT WRAPPER -->
+
+        <!-- FOOTER -->
+        <footer role="contentinfo" class="slds-p-around--large">
+            <!-- LAYOUT GRID -->
+            <div class="slds-grid slds-grid--align-spread">
+                <p class="slds-col">Demo module by Muralidhar</p>
+                <p class="slds-col">&copy; inteygrate.com</p>
+            </div>
+            <!-- / LAYOUT GRID -->
+        </footer>
+        <!-- / FOOTER -->
+
+
+    </div>
+    <!-- / REQUIRED SLDS WRAPPER -->
+
+</body>
+
+<!-- JAVASCRIPT -->
+<script>
+  var chat = new SObjectModel.Chat__c();
+  var outputDiv = document.getElementById("accountList");
+  //var topic = {!topic};
+  //alert("topic: "+topic);
+
+  function updateOutputDiv() {
+
+    chat.retrieve(
+      {
+        where: { 
+        Topic_Name__c: {eq: '{!topic}'}, 
+        },
+        orderby: [{LastModifiedDate: 'DESC'}], 
+        limit: 10
+      },
+      function(error, records) {
+        if (error) {
+          alert(error.message);
+        } else {
+
+          // create data table
+          var dataTable = document.createElement('table');
+          dataTable.className = 'slds-table slds-table--bordered';
+
+          // add header row
+          var tableHeader = dataTable.createTHead();
+          var tableHeaderRow = tableHeader.insertRow();
+
+          var tableHeaderRowCell1 = tableHeaderRow.insertCell(0);
+          tableHeaderRowCell1.appendChild(document.createTextNode('Message'));
+          tableHeaderRowCell1.setAttribute('scope', 'col');
+
+          var tableHeaderRowCell2 = tableHeaderRow.insertCell(1);
+          tableHeaderRowCell2.appendChild(document.createTextNode('Topic'));
+          tableHeaderRowCell2.setAttribute('scope', 'col');
+
+          // build table body
+          var tableBody = dataTable.appendChild(document.createElement('tbody'))
+          var dataRow, dataRowCell1, dataRowCell2, recordName, recordId;
+          records.forEach(function(record) {
+
+              dataRow = tableBody.insertRow();
+
+              dataRowCell1 = dataRow.insertCell(0);
+              recordName = document.createTextNode(record.get("message__c"));
+              dataRowCell1.appendChild(recordName);
+
+              dataRowCell2 = dataRow.insertCell(1);
+              recordId = document.createTextNode(record.get("Topic_Name__c"));
+              dataRowCell2.appendChild(recordId);
+
+          });
+
+          // create data table wrapper
+          var tableWrapper = document.createElement('div');
+          tableWrapper.className = 'slds-scrollable--x';
+          tableWrapper.appendChild(dataTable);
+
+          if (outputDiv.firstChild) {
+            // replace table if it already exists
+            // see later in tutorial
+            outputDiv.replaceChild(tableWrapper, outputDiv.firstChild);
+          } else {
+            outputDiv.appendChild(tableWrapper);
+          }
+        }
+      }
+    );
+  }
+
+  updateOutputDiv();
+  function createAccount() {
+  var accountName = document.getElementById("accountName").value;
+  var account = new SObjectModel.Chat__c();
+  account.create({message__c: accountName,Topic_Name__c:'{!topic}'}, function(error, records) {
+    if (error) {
+      alert(error.message);
+    } else {
+      updateOutputDiv();
+    }
+  });
+  return false;
+}
+
+</script>
+<!-- / JAVASCRIPT -->
+
+    </html>
+</apex:page>

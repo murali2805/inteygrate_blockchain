@@ -1,0 +1,6 @@
+<apex:page controller="BooleanLogicEngine">
+    <apex:form id="f1">
+        <apex:inputTextArea value="{!logicString}" style="width:400px;height:50px;"/> = {!result}<br/>
+        <apex:commandButton value="Compute" action="{!computeLogic}" rerender="f1"/><br/>
+    </apex:form>
+</apex:page>

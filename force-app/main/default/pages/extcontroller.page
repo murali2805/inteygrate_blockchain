@@ -1,0 +1,58 @@
+<apex:page controller="ExtController">
+
+  
+  <apex:pageMessage summary="This pageMessage will always display. Validation error 
+           messages appear in the pageMessages component." severity="warning" strength="3" />
+  <apex:pageMessages />
+  
+  
+  <c:componentexample myValue="My component's value" textColor="red" />
+  <c:componentexample myValue="My component's value" textColor="green" />
+
+  <apex:repeat value="{!accList }" var="a">
+      <!--<apex:outputPanel rendered="{!IF(a.Name!='123',true,false)}" >-->
+      <p>{!a.Id} : {!a.Name}</p>
+      <!--</apex:outputPanel>-->
+  </apex:repeat>
+  
+  
+  <apex:pageBlock >
+    <apex:pageBlockTable value="{!accList}" var="acc">
+        <apex:column value="{!acc.Id}"/>
+      <apex:column value="{!acc.name}"/>
+    </apex:pageBlockTable>
+  </apex:pageBlock>
+  
+  <apex:form id="formid">
+     <apex:pageMessages id="pbm"/> 
+    <apex:pageBlock title="My Content" mode="edit">
+      
+      <apex:pageBlockSection title="My Content Section" columns="2">
+      <!--<apex:inputField id='myid' value="{!acc.Id}"/>-->
+      <apex:outputText >{!acc.name} </apex:outputText>
+       Suffix: <input id="suffix"/>
+      </apex:pageBlockSection>
+      
+      <button onClick="jsFun()" type='button'>Save</button>
+      
+    </apex:pageBlock>
+    
+    <apex:actionFunction name="customSaveAF" reRender="formid,pbm" action="{!customSave}">
+        <apex:param name="firstParam" assignTo="{!suffix}" value="" />
+        
+    </apex:actionFunction>
+  </apex:form>
+  
+  
+  
+  <script>
+      function jsFun(){
+          var suffix = document.getElementById("suffix").value ;
+          alert('I will add '+ suffix +' to the Account Name before Saving');
+          customSaveAF(suffix);
+      }
+      
+  </script>
+  
+  
+</apex:page>

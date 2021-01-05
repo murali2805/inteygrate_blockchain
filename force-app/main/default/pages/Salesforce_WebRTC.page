@@ -1,0 +1,20 @@
+<apex:page >
+    <html>
+    <head>
+        <!-- Include the PubNub Library -->
+        <script src="{!URLFOR($Resource.pubnub_3_9_2_min_js,'/')}" />
+    </head>
+    <body>
+       
+       <!-- Instantiate PubNub -->
+        <script type="text/javascript">
+        
+            var PUBNUB_demo = PUBNUB.init({
+                publish_key: 'Your Publish Key Here',
+                subscribe_key: 'Your Subscribe Key Here'
+            });
+        
+        </script>
+    </body>
+</html>
+</apex:page>

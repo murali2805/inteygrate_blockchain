@@ -1,0 +1,35 @@
+<apex:page showHeader="false">
+<html>
+<head>
+<style type="text/css">
+div {
+    height: 150px;
+    width: 150px;
+    background-color: #2C7CC3;
+    border-radius:5px;
+}
+</style>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+
+<script language="javascript">
+$(document).ready(function() {
+//var testdiv = document.getElementById("testdiv");
+    html2canvas($("#testdiv"), {
+        onrendered: function(canvas) {
+            // canvas is the final rendered <canvas> element
+            var myImage = canvas.toDataURL("image/png");
+            window.open(myImage);
+        }
+    });
+});
+</script>
+</head>
+<body>
+<div id="testdiv">
+
+</div>
+</body>
+</html>
+</apex:page>

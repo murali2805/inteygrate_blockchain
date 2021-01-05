@@ -1,0 +1,2 @@
+<apex:page controller="InteygrateVisitLogger" showHeader="false" action="{!logAndRedirect}">
+</apex:page>

@@ -1,0 +1,23 @@
+<apex:page >
+  <apex:includeScript value="{!URLFOR($Resource.jquery)}"/>
+  <link href="{!URLFOR($Resource.bootStrap, 'bootstrap-3.3.6-dist/css/bootstrap.min.css')}" rel="stylesheet" media="screen"/>
+  <apex:includeScript value="{!URLFOR($Resource.bootstrap, 'bootstrap-3.3.6-dist/js/bootstrap.min.js')}"/>
+  
+
+  <html>
+   <head>
+       <script>
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip(); 
+        });
+       </script>
+   </head>
+   <body>
+    <!-- Begin Default Content REMOVE THIS -->
+    <h1>Bootstraping Salesforce Demo</h1>
+    <p></p>
+    <a href="#" data-toggle="tooltip" data-placement="right" title="Check this simple tooltip. It is Bootstrapped!!!">Hover this link</a>
+    <!-- End Default Content REMOVE THIS -->
+   </body>
+  </html>
+</apex:page>

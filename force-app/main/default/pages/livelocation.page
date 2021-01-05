@@ -1,0 +1,31 @@
+<apex:page showHeader="false">
+<apex:remoteObjects >
+  <apex:remoteObjectModel name="Account" fields="Id,Name,LastModifiedDate,Nodejs_Demo_Result__c"/>
+</apex:remoteObjects>
+<p id="demo"></p>
+<script>
+window.onload = setInterval(function(){ getLocation(); }, 3000);
+var x = document.getElementById("demo");
+function getLocation() {
+   var t = new Date(); 
+  console.log(t.getUTCSeconds());  
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else {
+    x.innerHTML = "Geolocation is not supported by this browser.";
+  }
+}
+
+function showPosition(position) {
+  x.innerHTML = "Latitude: " + position.coords.latitude + 
+  "<br>Longitude: " + position.coords.longitude; 
+  
+   var account = new SObjectModel.Account();
+      account.create({Name: ''+position.coords.latitude,Nodejs_Demo_Result__c: ''+position.coords.longitude}, function(error, records) {
+        if (error) {
+          alert(error.message);
+        }
+      });
+}
+</script>
+</apex:page>

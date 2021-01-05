@@ -1,0 +1,47 @@
+<apex:page standardController="Account">
+<style>
+.mytable
+{
+    width: 500px;
+    border-collapse: collapse;
+   
+}
+.mytable thead
+{
+    display: block;
+    width: 500px;
+    overflow: auto;
+    color: #fff;
+    background: #000;
+}
+
+.mytable tbody
+{
+    display: block;
+    width: 500px;
+    height: 200px;
+    background: pink;
+    overflow: auto;
+}
+
+.mytable th,td
+{
+    padding: .5em 1em;
+    text-align: left;
+    vertical-align: top;
+    border-left: 1px solid #fff;
+}
+
+
+</style>
+   <apex:pageBlock title="Hello {!$User.FirstName}!">
+      You are viewing the {!account.name} account.
+   </apex:pageBlock>
+   <apex:pageBlock title="Contacts">
+      <apex:pageBlockTable styleClass="mytable" value="{!account.Contacts}" var="contact">
+         <apex:column value="{!contact.Name}"/>
+         <apex:column value="{!contact.MailingCity}"/>
+         <apex:column value="{!contact.Phone}"/>
+      </apex:pageBlockTable>
+   </apex:pageBlock>
+</apex:page>

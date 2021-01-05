@@ -1,0 +1,15 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,forceCommunity:availableForAllPageTypes" access="global" >
+  
+    <ltng:require scripts="{!join(',',	$Resource.webgllib+'/build/three.js',
+                           				$Resource.webgllib+'/examples/js/libs/inflate.min.js',
+                           				$Resource.webgllib+'/examples/js/loaders/FBXLoader.js',
+                           				$Resource.webgllib+'/examples/js/controls/OrbitControls.js',
+                           				$Resource.webgllib+'/examples/js/WebGL.js',
+                           				$Resource.webgllib+'/examples/js/libs/stats.min.js')}"
+                  afterScriptsLoaded="{!c.scriptsLoaded}"/>
+   
+    <div id="info">
+            <a href="http://threejs.org" target="_blank" rel="noopener">three.js</a> - FBXLoader<br />
+            Character and animation from <a href="https://www.mixamo.com/" target="_blank" rel="noopener">Mixamo</a>
+        </div>
+</aura:component>

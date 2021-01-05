@@ -1,0 +1,9 @@
+<apex:page standardController="JiraIssue__c" showHeader="true" sidebar="true">
+   <apex:form id="frmAuth" style="width : 100%;" >
+       <apex:pageblock >  
+       <apex:pageBlockButtons >
+            <apex:commandButton action="{!save}" value="Save"/>
+       </apex:pageBlockButtons>
+       </apex:pageblock>  
+  </apex:form>
+</apex:page>

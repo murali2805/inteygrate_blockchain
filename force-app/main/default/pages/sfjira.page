@@ -1,0 +1,120 @@
+<apex:page controller="JiraIntegration1Controller" title="Atlassian Jira">
+
+<style type="text/css">
+    .notinsync
+    {
+        background-color: orange;
+    }
+    .insync
+    {
+        background-color: #A3E0A3;
+    }
+    .doesnotexist
+    {
+        background-color: red;
+    }
+    .floatdetail
+    {
+        position: absolute;
+        background-color: #F2F2F2;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+        top: 15%;
+    }
+    .sizepicklist{
+        height: 25px;
+        padding: 0 5px 0 5px;
+        margin-bottom: 10px;
+    }
+    .m-l-xl{
+        margin-left:100px;
+    }
+</style>
+
+<script>
+    function toggleCheckAll(ele) {
+         var checkboxes = document.getElementsByClassName('issueCheckBox');
+         if (ele.checked) {
+             for (var i = 0; i < checkboxes.length; i++) {
+                 if (checkboxes[i].type == 'checkbox') {
+                     checkboxes[i].checked = true;
+                 }
+             }
+         } else {
+             for (var i = 0; i < checkboxes.length; i++) {
+                 
+                 if (checkboxes[i].type == 'checkbox') {
+                     checkboxes[i].checked = false;
+                 }
+             }
+         }
+     }
+     
+
+</script>
+
+<apex:outputPanel id="issueDetail" onclick="this.style.display = 'none';" title="Click anywhere to close this detail section"> 
+    <apex:detail subject="{!$CurrentPage.parameters.iid}" relatedList="false" title="false"/>
+</apex:outputPanel>
+
+<apex:form >
+    <apex:actionFunction name="savePage" action="{!savePageSize}" rerender="issueTable"/>
+</apex:form> 
+
+<apex:form >
+
+    <apex:actionStatus id="splashStatus" onstart="startSplash();" onstop="endSplash(); "/>
+    <div class="splashStatus" id="splashDiv">
+        <div class="circle"></div>
+        <div class="txt">Please Wait. Loading...</div>
+    </div>
+    <apex:pageBlock title="Atlassian JIRA Issues updated after last Batch" id="issueTable">
+
+           
+           <apex:outputLabel value="Show : " /> 
+           <apex:selectList value="{!selectedsize}"  styleClass="sizepicklist" multiselect="false" size="1">
+                   <apex:selectOptions value="{!sizes}" />
+                   <apex:actionSupport event="onchange" action="{!savePageSize}" reRender="issueTable" status="splashStatus"/>
+           </apex:selectList>
+            <apex:outputLabel value=" records per page" />
+           
+           <apex:outputLabel value="Issue Key : " styleClass="m-l-xl" /> 
+           <apex:inputText value="{!issueKey}"/>
+           <apex:commandButton value="Search" action="{!searchByKey}" reRender="issueTable" status="splashStatus"/>
+           
+           <apex:pageBlockTable value="{!supportIssues}" var="issue">
+             
+                <apex:column headerValue="" styleClass="{!IF(issue.syncStatus__c == 1, 'notinsync', IF(issue.syncStatus__c == 2, 'insync', 'doesnotexist'))}">
+                </apex:column>
+                
+                <apex:column >
+                    <apex:facet name="header">
+                        <input type="checkbox" id="checkAllBox" onclick="toggleCheckAll(this)"/>
+                    </apex:facet>
+                    <apex:inputCheckbox styleClass="issueCheckBox" value="{!issue.syncThisIssue__c}"/>
+                </apex:column>
+  
+                <apex:column headerValue="Issue Key">
+                     <apex:commandLink rerender="issueDetail" status="splashStatus"> 
+                          {!issue.Issue_Key__c}
+                          <apex:param name="iid" value="{!issue.id}"/>
+                     </apex:commandLink>
+                </apex:column>
+                <apex:column headerValue="Summary">
+                     <apex:outputField value="{!issue.Summary__c}"/>
+                </apex:column>
+                
+            </apex:pageBlockTable>
+            <apex:pageBlockButtons >
+                 <apex:commandButton value="Previous" action="{!previous}" reRender="issueTable" rendered="{!isPreviousRequired == true }" status="splashStatus"/>
+                 <apex:commandButton value="Next" action="{!next}" reRender="issueTable" rendered="{!isNextRequired == true }" status="splashStatus"/>
+                 <apex:commandButton value="Sync" action="{!sync}" reRender="issueTable" status="splashStatus"/>
+
+            </apex:pageBlockButtons>
+
+      </apex:pageBlock>
+      </apex:form>
+
+      <div class="lightbox"></div>
+</apex:page>
